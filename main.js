@@ -9,44 +9,66 @@ const COLORS = [
   '#bfbfbf', '#f2f1ef', '#bdc3c7', '#ecf0f1', '#d2d7d3', '#757d75', '#eeeeee', '#abb7b7', '#6c7a89', '#95a5a6'
 ]
 
+const COLORS2 = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50", "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"]
 
+const COLORS3 = COLORS.concat(COLORS2)
 
 Array.prototype.randomColor = function() {
   return this[Math.floor(Math.random() * this.length)]
 }
 
 const app = document.getElementById('app')
+const btn = document.getElementById('btn')
 
 let z = 333
 let s = 0
 
 document.addEventListener('keydown', function(event) {
   if (event.which === 13) {
-    const input = document.getElementsByTagName('input')[0]
-    input.classList.add('fade');
+    const input = document.getElementsByTagName('input')[0].classList.add('fadeOut')
     setTimeout(function() {
-      makeLayer(input.value)
-    }, 900)
+      makeLayer()
+    }, 660)
   }
 })
 
-function makeLayer(name) {
-  for (let i = 0; i < 200/name.length; i++) {
+function makeLayer() {
+  const name = document.getElementsByTagName('input')[0].value.toLowerCase()
+  for (let i = 0; i < 200 / name.length; i++) {
     setTimeout(function() {
       const layer = document.createElement('div')
       let str = ''
-      for (let letter in name) {
-        str += `<span>${name[letter]}</span>`
-      }
+      let width = (1 / name.length).toFixed(2) * 100
+      for (let letter in name)
+        str += `<span style='width:${name[letter] === 'm' || name[i] === 'w' ? width + 4 : width}%'>${name[letter]}</span>`
       layer.innerHTML = str
-      layer.style.color = COLORS.randomColor()
+      layer.style.color = COLORS3.randomColor()
       layer.style.zIndex = --z
-      layer.style.fontSize = ++i + 'vw'
+      layer.style.fontSize = ++i + 'em'
       app.appendChild(layer)
-    }, i * 12)
+    }, i * 15)
   }
+  if (!btn.classList.length) {
+    setTimeout(function() {
+     btn.classList.add('fadeIn')
+   },1000)
+ }
 }
 
+
+function makeAnotherLayer() {
+  if (app.childElementCount) {
+    while (app.hasChildNodes())
+      app.removeChild(app.firstChild)
+  }
+  setTimeout(function() {
+    makeLayer()
+  }, 100)
+}
+
+btn.addEventListener('click', function(event) {
+  makeAnotherLayer()
+})
 
 
 // $(document).keypress(function (e) {

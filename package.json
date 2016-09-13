@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "browser-sync start  --directory --server --files '*.js,*.html,*.css'"
+    "server": "browser-sync start  --directory --server --files --no-notify '*.js,*.html,*.css'"
   },
   "author": "",
   "license": "ISC",
