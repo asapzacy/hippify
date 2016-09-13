@@ -26,7 +26,7 @@ document.addEventListener('keydown', function(event) {
     input.classList.add('fade');
     setTimeout(function() {
       makeLayer(input.value)
-    }, 1200)
+    }, 900)
   }
 })
 
